@@ -4,9 +4,13 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { ImpedmentEntity } from "./ImpedmentEntity";
+
 
 @Entity({ name: "projects" })
 export class ProjectEntity extends BaseEntity {
@@ -30,6 +34,9 @@ export class ProjectEntity extends BaseEntity {
 
   @Column({ name: "updated_at" })
   updatedAt!: Date;
+
+  @OneToMany((_) => ImpedmentEntity, impedment => impedment.project)
+  impedments!: ImpedmentEntity[];
 
   @BeforeInsert()
   private beforeInsert() {
